@@ -1,0 +1,5 @@
+all:
+  hosts:
+    10.0.0.82:
+  vars:
+    ansible_become_pass: 1221

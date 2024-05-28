@@ -1,0 +1,27 @@
+---
+- name: Build and run Grafana container
+  hosts: all
+  become: yes
+  become_user: root
+  tasks:
+    - name: Copy file from local to remote
+      ansible.builtin.copy:
+        src: /home/ubuntu/grafana
+        dest: /home/ubuntu/
+
+
+    - name: Build Docker image
+      docker_image:
+        name: my_grafana_image
+        tag: latest
+        build:
+          path: /home/ubuntu/grafana             #remote dir
+      register: docker_image_result
+
+    - name: Run Docker container
+      docker_container:
+        name: my_grafana_container
+        image: my_grafana_image:latest
+        state: started
+        ports:
+          - "3000:3000"

@@ -1,0 +1,16 @@
+- name: Run Docker logs command for a container
+  hosts: all
+  become: yes
+  become_user: root
+  tasks:
+    - name: Fetch Docker Container Logs
+      ansible.builtin.shell:
+        cmd: docker logs pyspark
+      register: container_logs
+
+    - name: Save Docker Container Logs Locally
+      ansible.builtin.fetch:
+        src: "~/container_logs.log"  # Adjust the path and filename as needed
+        dest: /home/ubuntu/
+        flat: yes
+      delegate_to: localhost
