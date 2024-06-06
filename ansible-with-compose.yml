@@ -5,17 +5,9 @@
   tasks:
     - name: Copy Docker Compose file
       ansible.builtin.copy:
-        src: /home/ubuntu/PySpark   # Local path to your docker-compose.yml
+        src: /home/ubuntu/<working-dir>   # Local path to your docker-compose.yml
         dest: /home/ubuntu/  # Destination on remote machine
 
     - name: Run Docker Compose
       ansible.builtin.command:
-        cmd: docker-compose -f /home/ubuntu/PySpark/docker-compose.yaml up -d pyspark
-
-    - name: Fetch Docker Container Logs
-      ansible.builtin.shell:
-        cmd: docker logs pyspark
-      register: container_logs
-
-    - debug:
-        var: container_logs.stdout_lines
+        cmd: docker-compose -f /home/ubuntu/<working-dir>/docker-compose.yaml up
